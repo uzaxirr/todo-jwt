@@ -4,6 +4,7 @@
 # from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from django.shortcuts import redirect
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .serializers import UserSerializer, TaskSerializer
 from .models import TaskModel
@@ -82,7 +83,14 @@ def task_detail(request, pk):
             return Response({'status': status.HTTP_400_BAD_REQUEST, 'Error': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
     elif request.method == 'DELETE':
         task.delete()
-        return Response({'status': status.HTTP_204_NO_CONTENT}, status=status.HTTP_204_NO_CONTENT)
+        return Response({'status': status.HTTP_204_NO_CONTENT, 'details':"Task Deleted Sucessfully"}, status=status.HTTP_204_NO_CONTENT)
     else:
         return Response({'status': 'Method not allowed'})
         
+
+@api_view(['GET', 'POST'])
+# redirect view
+def redirect_view(request):
+    """View to redirect to GitHub Repo"""
+    response = redirect('https://github.com/uzair-ali10/todo-jwt')
+    return response
