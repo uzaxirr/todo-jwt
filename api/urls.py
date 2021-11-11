@@ -2,9 +2,11 @@
     API ENDPOINTS
 """
 from django.urls import path
-from .views import HelloView, register_user
+from .views import  register_user, test, save_task, task_detail
 
 urlpatterns = [
-    path('hi', HelloView.as_view(), name='hello'),
-    path('register', register_user, name='register'),
+    path('hi', save_task, name='hello'),
+    path('todos', save_task, name='task'),
+    path('todos/<int:pk>',task_detail, name='task_detail'),
+    path('signup', register_user, name='register'),
 ]
