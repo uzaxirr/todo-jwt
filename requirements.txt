@@ -1,7 +1,6 @@
 asgiref==3.4.1
 Django==3.2.9
 django-cors-headers==3.10.0
-django-filter==2.4.0
 django-utils-six==2.0
 djangorestframework==3.12.4
 djangorestframework-filters==0.11.1
