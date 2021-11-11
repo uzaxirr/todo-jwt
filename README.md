@@ -1,3 +1,6 @@
+## Postman Collection
+https://www.getpostman.com/collections/a17e18449b1ef1e71a4f
+
 
 ## API Reference
 
