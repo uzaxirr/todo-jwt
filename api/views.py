@@ -4,25 +4,17 @@
 # from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from .serializers import UserSerializer, TaskSerializer
 from .models import TaskModel
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.authentication import JWTAuthentication
-# Create your views here.
 
-# class HelloView(APIView):
-#     """ Testing View Class """
-#     permission_classes = (IsAuthenticated,)
-
-#     def get(self, request):
-#         content = {'message': 'Hello, World!'}
-#         return Response(content)
 
 @api_view(['POST'])
 def register_user(request):
@@ -43,9 +35,9 @@ def test(request):
     return Response(js_res)
 
 # make view authorized only
-
-@permission_classes([IsAuthenticated])
 @api_view(['GET', 'POST'])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
 def save_task(request):
     """View to save a new task"""
     if request.method == 'GET':
@@ -65,8 +57,10 @@ def save_task(request):
     else:
         return Response({'status': 'Method not allowed'})
 
-@permission_classes([IsAuthenticated])
+
 @api_view(['GET', 'PUT', 'DELETE'])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
 def task_detail(request, pk):
     """View to get, update or delete a task"""
     try:
